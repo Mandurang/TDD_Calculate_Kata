@@ -7,22 +7,13 @@ using System.Threading.Tasks;
 
 namespace TDD_Calculate
 {
-    public delegate void AddOccured();
-    class StringCalculator
+    public static class StringCalculator
     {
-        private int Count;
-        public event Action<string, int> AddOccured;
-
-        public StringCalculator()
+        //public event Action<string, int> AddOccured;
+        
+        public static int Add(string numbers)
         {
-            Count = 0;
-        }
-
-        public int Add(string numbers)
-        {
-            Count++;
             int result = 0;
-            OnAddOccurred("Method was called", Count);
 
             char[] separators = { '\n' , ',', ';'};
 
@@ -43,14 +34,9 @@ namespace TDD_Calculate
              return result;
         }
 
-        public int GetCalledCount()
-        {
-            return Count;
-        }
-
-        protected virtual void OnAddOccurred(string message, int value)
-        {
-            AddOccured?.Invoke(message, value);
-        }
+        //public int GetCalledCount()
+        //{
+        //    return Count;
+        //}
     }
 }
