@@ -16,10 +16,10 @@ namespace TDD_Calculate.UnitTests
         [InlineData("2,5", 7)]
         [InlineData("1\n2,3", 6)]
         [InlineData("//;\n1;2", 3)]
-        public void TestInAdd_ReturnValidValues(string userInput, int testResult)
+        public void TestInAdd_ReturnValidValues(string userInput, int expectation)
         {
             var result = StringCalculator.Add(userInput);
-            result.Should().Be(testResult);
+            result.Should().Be(expectation);
         }
 
         //[Fact]
@@ -39,11 +39,11 @@ namespace TDD_Calculate.UnitTests
         //    StringCalculator calculator = new StringCalculator();
         //    string separatorsInput = "1\n2,3";
         //    calculator.Add(separatorsInput);
-        //    int testResult = 1;
+        //    int expectation = 1;
         //    //ACT 
         //    var expectedResult = calculator.GetCalledCount();
         //    //ASSERT
-        //    Assert.Equal(expectedResult, testResult);
+        //    Assert.Equal(expectedResult, expectation);
         //}
     }
 }

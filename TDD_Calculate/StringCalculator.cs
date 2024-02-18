@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TDD_Calculate
 {
     public static class StringCalculator
@@ -15,14 +9,14 @@ namespace TDD_Calculate
         {
             int result = 0;
 
-            char[] separators = { '\n' , ',', ';'};
-
-             if (numbers == string.Empty || numbers == "")
+             if (numbers == string.Empty)
              {
                  return 0;
              }
 
-             var arrayNumbers = numbers.Split(separators);
+             var punctuation = numbers.Where(c => char.IsSymbol(c) || char.IsWhiteSpace(c) || char.IsSeparator(c) || char.IsPunctuation(c)).Distinct().ToArray();
+
+            var arrayNumbers = numbers.Split(punctuation);
 
              foreach (var number in arrayNumbers)
              {
