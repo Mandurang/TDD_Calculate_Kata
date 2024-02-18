@@ -22,15 +22,13 @@ namespace TDD_Calculate.UnitTests
             result.Should().Be(expectation);
         }
 
-        //[Fact]
-        //public void SumThrowsArgumentException()
-        //{
-        //    //ARRAGE
-        //    StringCalculator calculator = new StringCalculator();
-        //    string separatorsInput = "-1,-2;-3";
-        //    //ACT&ASSERT
-        //    Assert.Throws<ArgumentException>(() => calculator.Add(separatorsInput));
-        //}
+        [Theory]
+        [InlineData("-1,-2;-3")]
+        public void TestInAddNegativeNumbers_ThrowArgumentException(string userInput)
+        {
+            Action action = () => StringCalculator.Add(userInput);
+            action.Should().Throw<ArgumentException>();
+        }
 
         //[Fact]
         //public void GetSumCount()
