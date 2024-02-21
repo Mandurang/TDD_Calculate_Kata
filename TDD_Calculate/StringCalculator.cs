@@ -7,22 +7,11 @@ namespace TDD_Calculate
     {
         //public event Action<string, int> AddOccured;
         
-        public static int Add(string numbers)
-        {
-            int result = 0;
+        public static int Add(string numbers) 
+            => numbers == string.Empty ? 0 
+                : SumNumbers(numbers
+                .Split(AddAnySeparators(numbers)));
 
-             if (numbers == string.Empty)
-             {
-                 return 0;
-             }
-
-            var separators = AddAnySeparators(numbers);
-
-            var arrayNumbers = numbers.Split(separators);
-
-             result = SumNumbers(arrayNumbers);
-             return result;
-        }
 
         private static int SumNumbers(string[] arrayNumbers) 
             => ParseStringToInt(arrayNumbers).Sum();
