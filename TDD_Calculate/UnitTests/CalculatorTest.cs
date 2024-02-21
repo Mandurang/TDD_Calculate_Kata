@@ -18,7 +18,9 @@ namespace TDD_Calculate.UnitTests
         [InlineData("//;\n1;2", 3)]
         public void TestInAdd_ReturnValidValues(string userInput, int expectation)
         {
-            var result = StringCalculator.Add(userInput);
+            StringCalculator calculator = new StringCalculator();
+
+            var result = calculator.Add(userInput);
             result.Should().Be(expectation);
         }
 
@@ -28,22 +30,27 @@ namespace TDD_Calculate.UnitTests
         [InlineData("//;\n-1;-2")]
         public void TestInAddNegativeNumbers_ThrowArgumentException(string userInput)
         {
-            Action action = () => StringCalculator.Add(userInput);
+            StringCalculator calculator = new StringCalculator();
+
+            Action action = () => calculator.Add(userInput);
             action.Should().Throw<ArgumentException>();
         }
 
         [Theory]
         [InlineData(1,1)]
         [InlineData(4, 4)]
+        [InlineData(6, 6)]
         public void TestHowMuchCalledCount_ReturnValidCount(int calleCount, int expectation)
         {
             //ARRAGE
-            for (int i = 0; i < expectation; i++)
+            StringCalculator calculator = new StringCalculator();
+
+            for (int i = 0; i < calleCount; i++)
             {
-                StringCalculator.Add(String.Empty);
+                calculator.Add(String.Empty);
             }
             //ACT 
-            var result = StringCalculator.GetCalledCount();
+            var result = calculator.GetCalledCount();
             //ASSERT
             result.Should().Be(expectation);
         }

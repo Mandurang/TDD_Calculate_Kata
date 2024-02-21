@@ -3,20 +3,26 @@ using Newtonsoft.Json.Linq;
 
 namespace TDD_Calculate
 {
-    public static class StringCalculator
+    public class StringCalculator
     {
         //public event Action<string, int> AddOccured;
-        
-        public static int Add(string numbers) 
-            => numbers == string.Empty ? 0 
+        private int _calleCount;
+
+        public int Add(string numbers)
+        {
+            _calleCount++;
+            return numbers == string.Empty ? 0
                 : SumNumbers(numbers
-                .Split(AddAnySeparators(numbers)));
+                    .Split(AddAnySeparators(numbers)));
+        }
+        
 
+        private int SumNumbers(string[] arrayNumbers)
+        {
+            return ParseStringToInt(arrayNumbers).Sum();
+        }
 
-        private static int SumNumbers(string[] arrayNumbers) 
-            => ParseStringToInt(arrayNumbers).Sum();
-
-        private static List<int> ParseStringToInt(string[] arrayNumbers)
+        private List<int> ParseStringToInt(string[] arrayNumbers)
         {
             List<int> numbers = new List<int>();
 
@@ -30,7 +36,7 @@ namespace TDD_Calculate
             return numbers;
         }
 
-        private static void CheckNegativeNumbers(IEnumerable<int> values)
+        private void CheckNegativeNumbers(IEnumerable<int> values)
         {
             var negativeNumbers = values.Where(v => v < 0).ToList();
 
@@ -41,16 +47,15 @@ namespace TDD_Calculate
             }
         }
 
-        private static char[] AddAnySeparators(string numbers) 
+        private char[] AddAnySeparators(string numbers) 
             => numbers
                 .Where(c => (char.IsSymbol(c) || char.IsWhiteSpace(c) || char.IsSeparator(c) || char.IsPunctuation(c)) && c != '-')
                 .Distinct()
                 .ToArray();
 
-
-        //public int GetCalledCount()
-        //{
-        //    return Count;
-        //}
+        public int GetCalledCount()
+        {
+            return _calleCount;
+        }
     }
 }
