@@ -32,18 +32,20 @@ namespace TDD_Calculate.UnitTests
             action.Should().Throw<ArgumentException>();
         }
 
-        //[Fact]
-        //public void GetSumCount()
-        //{
-        //    //ARRAGE
-        //    StringCalculator calculator = new StringCalculator();
-        //    string separatorsInput = "1\n2,3";
-        //    calculator.Add(separatorsInput);
-        //    int expectation = 1;
-        //    //ACT 
-        //    var expectedResult = calculator.GetCalledCount();
-        //    //ASSERT
-        //    Assert.Equal(expectedResult, expectation);
-        //}
+        [Theory]
+        [InlineData(1,1)]
+        [InlineData(4, 4)]
+        public void TestHowMuchCalledCount_ReturnValidCount(int calleCount, int expectation)
+        {
+            //ARRAGE
+            for (int i = 0; i < expectation; i++)
+            {
+                StringCalculator.Add(String.Empty);
+            }
+            //ACT 
+            var result = StringCalculator.GetCalledCount();
+            //ASSERT
+            result.Should().Be(expectation);
+        }
     }
 }
