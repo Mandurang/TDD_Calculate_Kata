@@ -16,29 +16,29 @@ namespace TDD_Calculate
                  return 0;
              }
 
-            var punctuation = AddAnySeparators(numbers);
+            var separators = AddAnySeparators(numbers);
 
-            var arrayNumbers = numbers.Split(punctuation);
+            var arrayNumbers = numbers.Split(separators);
 
              result = SumNumbers(arrayNumbers);
              return result;
         }
 
-        private static int SumNumbers(string[] arrayNumbers)
+        private static int SumNumbers(string[] arrayNumbers) 
+            => ParseStringToInt(arrayNumbers).Sum();
+
+        private static List<int> ParseStringToInt(string[] arrayNumbers)
         {
-            List<int> values = new List<int>();
+            List<int> numbers = new List<int>();
 
             foreach (var number in arrayNumbers)
             {
                 int.TryParse(number, out int value);
-                values.Add(value);
+                numbers.Add(value);
             }
 
-            CheckNegativeNumbers(values);
-
-            int result = values.Sum();
-
-            return result;
+            CheckNegativeNumbers(numbers);
+            return numbers;
         }
 
         private static void CheckNegativeNumbers(IEnumerable<int> values)
@@ -57,6 +57,7 @@ namespace TDD_Calculate
                 .Where(c => (char.IsSymbol(c) || char.IsWhiteSpace(c) || char.IsSeparator(c) || char.IsPunctuation(c)) && c != '-')
                 .Distinct()
                 .ToArray();
+
 
         //public int GetCalledCount()
         //{

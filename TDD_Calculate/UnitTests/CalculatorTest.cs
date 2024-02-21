@@ -23,7 +23,9 @@ namespace TDD_Calculate.UnitTests
         }
 
         [Theory]
+        [InlineData("-10")]
         [InlineData("-1,-2;-3")]
+        [InlineData("//;\n-1;-2")]
         public void TestInAddNegativeNumbers_ThrowArgumentException(string userInput)
         {
             Action action = () => StringCalculator.Add(userInput);
