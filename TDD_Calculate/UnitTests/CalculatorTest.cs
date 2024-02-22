@@ -18,6 +18,7 @@ namespace TDD_Calculate.UnitTests
         [InlineData("//;\n1;2", 3)]
         [InlineData("//[***]\n1***2***3", 6)]
         [InlineData("//////////1[**][%%]\n**2^$$$%%^^25", 28)]
+        [InlineData("2;1001", 2)]
         public void TestInAdd_ReturnValidValues(string userInput, int expectation)
         {
             StringCalculator calculator = new StringCalculator();
