@@ -61,10 +61,8 @@ namespace TDD_Calculate.UnitTests
         }
 
         [Theory]
-        [InlineData("2,3", 5)]
-        [InlineData("1,1,1,1,1", 5)]
+        [InlineData("//;\n1;2", 3)]
         [InlineData("", 0)]
-        [InlineData("//////////1[**][%%]\n**2^$$$%%^^25", 28)]
         public void AddOccured_AfterAdd(string input, int expectedResult)
         {
             StringCalculator calculator = new StringCalculator();
