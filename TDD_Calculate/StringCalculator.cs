@@ -1,28 +1,36 @@
 ﻿
-using Newtonsoft.Json.Linq;
-
 namespace TDD_Calculate
 {
     public class StringCalculator
     {
-        //public event Action<string, int> AddOccured;
+        public event Action<string, int> AddOccured;
+
         private int _calleCount;
 
         public int Add(string numbers)
         {
             _calleCount++;
-            return numbers == string.Empty ? 0
-                : SumNumbers(numbers
-                    .Split(AddAnySeparators(numbers)));
+
+            if (numbers == string.Empty)
+            {
+                OnAddOccured(numbers, 0);
+                return 0;
+            }
+
+            var result = SumNumbers(numbers.Split(AddAnySeparators(numbers)));
+
+            OnAddOccured(numbers, result);
+
+            return result;
         }
-        
+
+        public int GetCalledCount()
+            => _calleCount;
 
         private int SumNumbers(string[] arrayNumbers)
-        {
-            return ParseStringToInt(arrayNumbers).Sum();
-        }
+            => ParseStringToInt(arrayNumbers).Sum();
 
-        private List<int> ParseStringToInt(string[] arrayNumbers)
+        private IEnumerable<int> ParseStringToInt(string[] arrayNumbers)
         {
             List<int> numbers = new List<int>();
 
@@ -36,26 +44,32 @@ namespace TDD_Calculate
             return numbers;
         }
 
-        private void CheckNegativeNumbers(IEnumerable<int> values)
+        private void CheckNegativeNumbers(IEnumerable<int> numbers)
         {
-            var negativeNumbers = values.Where(v => v < 0).ToList();
-
-            if (negativeNumbers.Any())
+            if (AddNegativeNumbers(numbers).Any())
             {
-                string negativeNumbersString = string.Join(", ", negativeNumbers);
-                throw new ArgumentException($"Negatives not allowed: {negativeNumbersString}");
+                throw new ArgumentException($"Negatives not allowed: {NegativeNumbersString(AddNegativeNumbers(numbers))}");
             }
         }
 
-        private char[] AddAnySeparators(string numbers) 
+        private char[] AddAnySeparators(string numbers)
             => numbers
                 .Where(c => (char.IsSymbol(c) || char.IsWhiteSpace(c) || char.IsSeparator(c) || char.IsPunctuation(c)) && c != '-')
                 .Distinct()
                 .ToArray();
 
-        public int GetCalledCount()
+
+
+        private static IEnumerable<int> AddNegativeNumbers(IEnumerable<int> values)
+            => values.Where(v => v < 0).ToList();
+
+        private static string NegativeNumbersString(IEnumerable<int> negativeNumbers)
+            => string.Join(", ", negativeNumbers);
+
+        protected virtual void OnAddOccured(string input, int result)
         {
-            return _calleCount;
+            AddOccured?.Invoke(input, result);
         }
+
     }
 }
