@@ -59,23 +59,29 @@ namespace TDD_Calculate.UnitTests
             result.Should().Be(expectation);
         }
 
-        [Fact]
-        public void TestEvent()
+        [Theory]
+        [InlineData("2,3", 5)]
+        [InlineData("1,1,1,1,1", 5)]
+        [InlineData("", 0)]
+        [InlineData("//////////1[**][%%]\n**2^$$$%%^^25", 28)]
+        public void AddOccured_AfterAdd(string input, int expectedResult)
         {
             StringCalculator calculator = new StringCalculator();
 
             string givenInput = string.Empty;
+            int result = 0; 
 
-            calculator.AddOccured += (input, result) =>
+            calculator.AddOccured += (input, res) =>
             {
                 givenInput = input;
+                result = res;
             };
 
-            calculator.Add("2,3");
+            calculator.Add(input);
 
             // Assert
-            Assert.Equal("2,3", givenInput);
-
+            givenInput.Should().Be(input);
+            result.Should().Be(expectedResult);
         }
     }
 }
