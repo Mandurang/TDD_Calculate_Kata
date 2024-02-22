@@ -37,7 +37,11 @@ namespace TDD_Calculate
             foreach (var number in arrayNumbers)
             {
                 int.TryParse(number, out int value);
-                numbers.Add(value);
+
+                if (value < 1000)
+                {
+                    numbers.Add(value);
+                }
             }
 
             CheckNegativeNumbers(numbers);
